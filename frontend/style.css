@@ -1,0 +1,22 @@
+body {
+    margin: 0%;
+}
+
+h2 {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.fields {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.submit-button {
+    justify-content: center;
+    display: flex;
+}

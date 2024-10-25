@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Predict Titanic Survival</h2>
+    <form id="predictForm">
+        <div class="fields">
+            <label>Pclass: <input type="number" name="Pclass" value="3"></label><br>
+            <label>SibSp: <input type="number" name="SibSp" value="1"></label><br>
+            <label>Age: <input type="number" name="Age" value="22" step="any"></label><br>
+            <label>Parch: <input type="number" name="Parch" value="0"></label><br>
+            <label>Female: <input type="radio" name="gender" value="female" checked></label><br>
+            <label>Male: <input type="radio" name="gender" value="male"></label><br> 
+        </div>
+        <div class="submit-button">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            
+            const data = {
+                Pclass: document.querySelector('[name="Pclass"]').value,
+                Age: document.querySelector('[name="Age"]').value,
+                SibSp: document.querySelector('[name="SibSp"]').value,
+                Parch: document.querySelector('[name="Parch"]').value,
+                female: document.querySelector('[name="gender"]:checked').value === 'female' ? 1 : 0,
+                male: document.querySelector('[name="gender"]:checked').value === 'male' ? 1 : 0,
+                Cherbourg: 0,
+                Queenstown: 0,
+                Southampton: 1
+            };
+
+            const response = await fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').textContent = result.Message;
+        });
+    </script>
+</body>
+</html>
