@@ -17,7 +17,7 @@ The project includes:
 * Fully containerized using Docker for easy portability and deployment.
 * AWS S3 for model persistence and AWS EC2 for cloud deployment.
 
-
+`
 ├── model/
 |   ├── app
 │       ├── app.py              # Flask app to expose API
@@ -35,4 +35,4 @@ The project includes:
     ├── style.css           # CSS styling for the frontend
     └── nginx.conf          # Nginx configuration for reverse proxy
     └── Dockerfile          # Dockerfile to containerize web app
-
+`
