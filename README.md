@@ -27,6 +27,10 @@ The project includes:
 ├── data/
 │   ├── train.csv           # Training data
 │   └── test.csv            # Test data (optional)
+|── infra/
+│   ├── ec2_role.tf            # Define the IAM Role for EC2 
+│   └── main.tf                # Contains Terraform block and provider block
+|   └── policies.tf            # Create policy for titanic project user
 ├── Dockerfile              # Dockerfile to containerize the app
 ├── docker-compose.yml      # Docker Compose file for multi-container setup
 ├── README.md               # Project readme
