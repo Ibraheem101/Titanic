@@ -2,12 +2,14 @@ services:
   api:
     build: .  # Directory containing Flask app and Dockerfile
     container_name: api
+    image: dockayo/api:latest
     ports:
       - "5000:5000"
   
   nginx:
     build: ./frontend/
     container_name: frontend
+    image: dockayo/frontend:latest
     ports:
       - "80:80"
     volumes:
