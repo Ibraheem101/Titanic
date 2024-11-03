@@ -33,3 +33,8 @@ resource "aws_s3_bucket" "project_bucket" {
   }
 }
 
+# Attach the AmazonSSMManagedInstanceCore policy to EC2 role for SSM access
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
