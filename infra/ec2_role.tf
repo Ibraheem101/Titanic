@@ -23,3 +23,13 @@ resource "aws_iam_role" "ec2_role" {
   }
 }
 
+# Create S3 Bucket
+resource "aws_s3_bucket" "project_bucket" {
+  bucket = "my-titanic-project-bucket"
+  
+  tags = {
+    Name        = var.bucket_name
+    Environment = "Dev"
+  }
+}
+
