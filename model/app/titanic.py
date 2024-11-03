@@ -5,6 +5,7 @@
 # Import libraries
 
 import os
+import boto3
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -97,17 +98,17 @@ submission["Survived"] = yhat
 submission.to_csv('my_submission.csv',index=False)
 print("Your submission was successfully saved!")
 
+# Initialize an S3 client
+s3 = boto3.client('s3')
 
-# In[44]:
+# Set bucket and model path
+bucket_name = 'my-titanic-project-bucket'
+model_file_name = filename
+local_model_path = f'{model_file_name}'
 
-
-# from xgboost import XGBClassifier
-
-# xgb = XGBClassifier()
-# xgb.fit(X_train, Y_train)
-
-# y_hat_xgb = xgb.predict(X_test_scaled)
-
-# xgb_submission = pd.DataFrame(X_test.index.values, columns = ["PassengerId"])
-# xgb_submission["Survived"] = y_hat_xgb
-# xgb_submission.to_csv('my_submission.csv',index=False)
+# Upload model to S3
+try:
+    s3.upload_file(local_model_path, bucket_name, f'models/{model_file_name}')
+    print(f"Model successfully uploaded to s3://{bucket_name}/models/{model_file_name}")
+except Exception as e:
+    print(f"Failed to upload model to S3: {e}")
