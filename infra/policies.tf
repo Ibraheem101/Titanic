@@ -8,7 +8,7 @@ resource "aws_iam_policy" "user_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
+        Effect = "Allow",
         Action = [
           "iam:CreateRole",
           "iam:DeleteRole",
@@ -41,6 +41,7 @@ resource "aws_iam_policy" "user_policy" {
           "arn:aws:s3:::my-titanic-project-bucket/*"
         ]
       }
+      
     ]
   })
 }
