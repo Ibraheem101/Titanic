@@ -5,14 +5,17 @@
 # Import libraries
 
 import os
-import boto3
 import numpy as np
 import pandas as pd
-import seaborn as sns
 
 # Load Data
-train_data = pd.read_csv("data/train.csv")
-test_data = pd.read_csv("data/test.csv")
+try:
+    train_data = pd.read_csv("data/train.csv")
+    test_data = pd.read_csv("data/test.csv")
+except FileNotFoundError as e:
+    print(f'{e}: Cannot load data. Trying to load locally ...')
+    train_data = pd.read_csv("../../data/train.csv")
+    test_data = pd.read_csv("../../data/test.csv")
 
 # Exploratory Data Analysis
 
@@ -86,6 +89,7 @@ LR = LogisticRegression(C=0.01, solver='liblinear').fit(X_train,y_train)
 import pickle
 filename = 'titanic_model.pkl'
 
+# Save Model Locally
 with open(filename, 'wb') as file:  
     pickle.dump(LR, file)
 
@@ -97,18 +101,3 @@ submission = pd.DataFrame(X_test.index.values, columns = ["PassengerId"])
 submission["Survived"] = yhat
 submission.to_csv('my_submission.csv',index=False)
 print("Your submission was successfully saved!")
-
-# Initialize an S3 client
-s3 = boto3.client('s3')
-
-# Set bucket and model path
-bucket_name = 'my-titanic-project-bucket'
-model_file_name = filename
-local_model_path = f'{model_file_name}'
-
-# Upload model to S3
-try:
-    s3.upload_file(local_model_path, bucket_name, f'models/{model_file_name}')
-    print(f"Model successfully uploaded to s3://{bucket_name}/models/{model_file_name}")
-except Exception as e:
-    print(f"Failed to upload model to S3: {e}")
